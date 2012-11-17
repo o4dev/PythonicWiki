@@ -1,4 +1,4 @@
-#!/bin/bash
+# Makefile for PythonicWiki
 #
 # Copyright (c) 2012, Luke Southam <luke@devthe.com>
 # All rights reserved.
@@ -33,50 +33,53 @@
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SHELL := /bin/bash
 
-source $DIR/project_vars.sh
+APP := app/
 
-cd $DIR/../app
+STATIC := $(APP)/static
 
-lake.py -fq
-echo compiled app/less/*.less to app/static/css/*.css
-coffee -c -o coffee/*.coffee static/js
-echo compiled coffee/*.coffee to static/js/*.js
-cd ..
+LESS := $(STATIC)/less
+CSS := $(LESS)/css
 
-pid=`lsof -i tcp:8080 | tail -n +2 | awk '{print $2}'`
+COFFEE := $(STATIC)/coffee
+JS :=  $(COFFEE)/js
 
-if [ ! -z "$pid" ]
-then
-	kill $pid
-fi
 
-echo starting server
-dev_appserver.py app &
-SERVER_PID=$!
+clean:
+	find . -type f -name '*.pyc' -exec rm -f {} ';'
+	find . -type f -name '.*.swp' -exec rm -f {} ';'
+	find . -type f -name '*~' -exec rm -f {} ';'
+	! test -d $(CSS) || rm -r $(CSS)
+	! test -d $(JS) || rm -r $(JS)
+	mkdir $(CSS)
+	mkdir $(JS)
 
-PWD=`pwd`
 
-SERVER=" --app=http://localhost:8080/"
-cmd="chromium-browser --temp-profile --app=http://localhost:8080/"
+server: clean less coffee
+	@pid=`lsof -i tcp:8080 | tail -n +2 | awk '{print $2}'`
+	@if [ ! -z "$(pid)" ];then \
+		kill $(pid); \
+	fi
+	dev_appserver.py app &
+	SERVER_PID=$!
+	sleep 10
+	chromium-browser --temp-profile --app=http://localhost:8080/
+	kill $(SERVER_PID)
 
-if [ $# == 0 ]
-then
-	cmd+=$SERVER
-fi
+commit: clean
+	git add .
+	git commit -a
 
-for arg in $@
-do
-	path=`realpath $arg`
-	cmd+=$SERVER
-	cmd+=${path:${#PWD}}
-	cmd+="/"
-done
+push: commit
+	git push
 
-sleep 10
+less: clean
+	python .scripts/less.py $(LESS)
 
-echo starting chrome
-$cmd
 
-kill $SERVER_PID
+coffee:
+	python .scripts/build.py $(COFFEE) > $(JS)/main.js
+
+deploy:
+	#..

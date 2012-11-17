@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env python
 #
 # Copyright (c) 2012, Luke Southam <luke@devthe.com>
 # All rights reserved.
@@ -32,51 +32,12 @@
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
+"""
+template's __init__
+"""
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+__author__ = "Luke Southam <luke@devthe.com>"
+__copyright__ = "Copyright 2012, DEVTHE.COM LIMITED"
+__license__ = "The BSD 3-Clause License"
+__status__ = "Development"
 
-source $DIR/project_vars.sh
-
-cd $DIR/../app
-
-lake.py -fq
-echo compiled app/less/*.less to app/static/css/*.css
-coffee -c -o coffee/*.coffee static/js
-echo compiled coffee/*.coffee to static/js/*.js
-cd ..
-
-pid=`lsof -i tcp:8080 | tail -n +2 | awk '{print $2}'`
-
-if [ ! -z "$pid" ]
-then
-	kill $pid
-fi
-
-echo starting server
-dev_appserver.py app &
-SERVER_PID=$!
-
-PWD=`pwd`
-
-SERVER=" --app=http://localhost:8080/"
-cmd="chromium-browser --temp-profile --app=http://localhost:8080/"
-
-if [ $# == 0 ]
-then
-	cmd+=$SERVER
-fi
-
-for arg in $@
-do
-	path=`realpath $arg`
-	cmd+=$SERVER
-	cmd+=${path:${#PWD}}
-	cmd+="/"
-done
-
-sleep 10
-
-echo starting chrome
-$cmd
-
-kill $SERVER_PID

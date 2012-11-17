@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env python
 #
 # Copyright (c) 2012, Luke Southam <luke@devthe.com>
 # All rights reserved.
@@ -33,50 +33,36 @@
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+from sys import argv
+import glob
+import os
 
-source $DIR/project_vars.sh
 
-cd $DIR/../app
+def main():
+    less_path = get_args()
+    for less_file in find_less(less_path):
+        less("%s/%s" % (less_path, less_file), "%s/css/%s" % (
+            less_path, less_file[:-5]))
 
-lake.py -fq
-echo compiled app/less/*.less to app/static/css/*.css
-coffee -c -o coffee/*.coffee static/js
-echo compiled coffee/*.coffee to static/js/*.js
-cd ..
 
-pid=`lsof -i tcp:8080 | tail -n +2 | awk '{print $2}'`
+def get_args():
+    return argv[1]
 
-if [ ! -z "$pid" ]
-then
-	kill $pid
-fi
 
-echo starting server
-dev_appserver.py app &
-SERVER_PID=$!
+def find_less(less_path):
+    path = "%s/../" % os.path.dirname(os.path.realpath(__file__))
+    less_files = []
+    os.chdir(less_path)
+    for less_file in glob.glob("*.less"):
+        less_files.append(less_file)
+    os.chdir(path)
+    return less_files
 
-PWD=`pwd`
 
-SERVER=" --app=http://localhost:8080/"
-cmd="chromium-browser --temp-profile --app=http://localhost:8080/"
+def less(*args):
+    os.system("lessc %s %s.css" % args)
+    os.system("lessc --compress %s %s.min.css" % args)
 
-if [ $# == 0 ]
-then
-	cmd+=$SERVER
-fi
 
-for arg in $@
-do
-	path=`realpath $arg`
-	cmd+=$SERVER
-	cmd+=${path:${#PWD}}
-	cmd+="/"
-done
-
-sleep 10
-
-echo starting chrome
-$cmd
-
-kill $SERVER_PID
+if __name__ == '__main__':
+    main()
