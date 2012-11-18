@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"less",
+				"LESS"
+			],
+			[
+				"Proj",
+				"PROJECT_VARS"
+			],
+			[
 				"co",
 				"collectionOptions"
 			],
@@ -506,27 +514,16 @@
 			[
 				"S",
 				"StringProperty"
-			],
-			[
-				"fo",
-				"formal_name"
-			],
-			[
-				"jin",
-				"jinja_environment"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"contents": "#!/usr/bin/env python\n#\n# Copyright (c) 2012, Luke Southam <luke@devthe.com>\n# All rights reserved.\n#\n# Redistribution and use in source and binary forms, with or without\n# modification, are permitted provided that the following conditions\n# are met:\n#\n# - Redistributions of source code must retain the above copyright\n#   notice, this list of conditions and the following disclaimer.\n#\n# - Redistributions in binary form must reproduce the above copyright\n#   notice, this list of conditions and the following disclaimer in\n#   the documentation and/or other materials provided with the\n#   distribution.\n#\n# - Neither the name of the DEVTHE.COM LIMITED nor the names of its\n#   contributors may be used to endorse or promote products derived\n#   from this software without specific prior written permission.\n#\n# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND\n# CONTRIBUTORS \"AS IS\" AND ANY EXPRESS OR IMPLIED WARRANTIES,\n# INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF\n# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\n# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS\n# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,\n# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED\n# TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,\n# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON\n# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR\n# TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF\n# THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF\n# SUCH DAMAGE.\n\"\"\"\nPythonicWiki\n\"\"\"\n\nimport webapp2\nfrom templates import root_page\n\n__author__ = \"Luke Southam <luke@devthe.com>\"\n__copyright__ = \"Copyright 2012, DEVTHE.COM LIMITED\"\n__license__ = \"The BSD 3-Clause License\"\n__status__ = \"Development\"\n\n#!/usr/bin/env python\n#\n# Copyright 2012, DEVTHE.COM LIMITED\n#\n# Licensed to IMARKER LIMITED under the License specified\n# in LICENSE.txt which you may also obtain a copy at:\n#\n#     http://www.binpress.com/license/view/l/afa08c3240b79561d1e0c7141bd81998\n#\n# Software distributed under the License is distributed on an \"AS IS\" basis,\n# WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for\n# the specific language governing rights and limitations under the License.\n\"\"\"\nThe base Handler\n\"\"\"\n\nfrom google.appengine.api import users\nfrom webapp2 import RequestHandler, cached_property\nfrom webapp2_extras import sessions\nfrom templates import jinja_environment\n\nfrom models import imarker_by_id\n\n\n__author__ = \"Luke Southam <luke@devthe.com>\"\n__copyright__ = \"Copyright 2012, DEVTHE.COM LIMITED\"\n__license__ = \"http://www.binpress.com/license/view/l/\\\nafa08c3240b79561d1e0c7141bd81998\"\n__status__ = \"Prototype\"\n\n\nclass BaseHandler(RequestHandler):\n    class __User(object):\n        \"\"\"\n        A User instance just reflects the authentification status of the\n        current *user* that sent the request. An instance of User should \n        be attached to handler.user when authentification is needed.\n        \"\"\"\n        def __init__(self, handler):\n            user = users.get_current_user()\n            if user:\n                self.active = True\n                self.id = user.user_id()\n                self.name = user.nickname()\n                self.email = user.email()\n                self.admin = users.is_current_user_admin()\n                self.logout = users.create_logout_url(\"/?loggedout=1\")\n                self.reg = imarker_by_id(self.id)\n            else:\n                self.active = False\n                self.login = users.create_login_url(\"/?login=1\")\n    # Allows User to be called more attribute like:\n    # self.User() instead of self.__User(self)\n    User = lambda self: self.__User(self)\n\n    def write(self):\n        self.response.write(r)\n\n    def dispatch(self):\n        # Get a session store for this request.\n        self.session_store = sessions.get_store(request=self.request)\n\n        try:\n            # Dispatch the request.\n            RequestHandler.dispatch(self)\n        finally:\n            # Save all sessions.\n            self.session_store.save_sessions(self.response)\n\n    @cached_property\n    def session(self):\n        # Returns a session using the default cookie key.\n        return self.session_store.get_session()\n\n    def get_flashes(self, *args, **kwargs):\n        return self.session.get_flashes(*args, **kwargs)\n\n    def add_flash(self, title, msg=\"\", level=\"\"):\n        level = \"alert-\" + level if level else \"\"\n        return self.session.add_flash((title, msg), level)\n    def __init__(self, request, response):\n        self.initialize(request, response)\n        self.response.headers['Access-Control-Allow-Origin'] = '*'\n        \n\n\ndef auth(f):\n    \"\"\"\n    Returns a function used to provide authentification\n    capabilitys to the function. If th user is authentificated\n    it will pass True in the second argument of the input function\n    else it will pass False. It also attaches the User instance\n    to self.user.\n    \"\"\"\n    def func(self, *args, **kwargs):\n        if not hasattr(self, 'user'):\n            self.user = self.User()\n        if not self.user.active:\n            return f(self, False, *args, **kwargs)\n        if not self.user.reg:\n            return self.redirect(\"/_signup\")\n        self.imarker = self.user.reg\n        return f(self, True, *args, **kwargs)\n    return func\n\n\ndef restricted(f):\n    \"\"\"\n    Returns a function used to restrict an area from\n    unauthentificated users which passes a User instance\n    in the second argument of the input function, if user is\n    authentificated else redirects the user to be\n    authentificated. It also attaches the User instance\n    to self.user.\n    \"\"\"\n    def func(self, *args, **kwargs):\n        if not hasattr(self, 'user'):\n            self.user = self.User()\n        if not self.user.active:\n            return self.redirect(self.user.login)\n        if self.user.reg:\n            return self.redirect(\"/_signup\")\n        self.imarker = self.user.reg\n        return f(self, self.user, *args, **kwargs)\n    return func\n\ndef template(path, **kwargs):\n    jinja_\n\n\nclass MainHandler(webapp2.RequestHandler):\n    def get(self):\n        self.response.write(root_page.render({'msg':\"Hello world from PythonicWiki\"}))\n\napp = webapp2.WSGIApplication([('/', MainHandler)],\n                              debug=True)\n\n",
 			"file": "app/main.py",
-			"file_size": 2079,
-			"file_write_time": 1353004962000000,
 			"settings":
 			{
-				"buffer_size": 6403,
+				"buffer_size": 2079,
 				"line_ending": "Unix"
 			}
 		},
@@ -535,6 +532,53 @@
 			"settings":
 			{
 				"buffer_size": 4531,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 2466,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/static/coffee/build.json",
+			"settings":
+			{
+				"buffer_size": 66,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/static/coffee/test.coffee",
+			"settings":
+			{
+				"buffer_size": 50,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/static/less/main.less",
+			"settings":
+			{
+				"buffer_size": 137,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": ".scripts/clean.sh",
+			"settings":
+			{
+				"buffer_size": 152,
 				"line_ending": "Unix"
 			}
 		},
@@ -550,9 +594,25 @@
 	"build_system": "server",
 	"command_palette":
 	{
-		"height": 369.0,
+		"height": 54.0,
 		"selected_items":
 		[
+			[
+				"#!",
+				"Snippet: #!/usr/bin/env"
+			],
+			[
+				"coff",
+				"Set Syntax: CoffeeScript"
+			],
+			[
+				"Mak",
+				"Set Syntax: Makefile"
+			],
+			[
+				"pyt",
+				"Set Syntax: Python"
+			],
 			[
 				"ZEN",
 				"Zen Coding: Zen as you type"
@@ -596,10 +656,6 @@
 			[
 				"",
 				"Coffee: Check Syntax"
-			],
-			[
-				"coff",
-				"Set Syntax: CoffeeScript"
 			],
 			[
 				"new",
@@ -906,10 +962,6 @@
 				"File: Save All"
 			],
 			[
-				"pyt",
-				"Set Syntax: Python"
-			],
-			[
 				"api",
 				"Set Syntax: AppleScript"
 			],
@@ -986,7 +1038,7 @@
 				"Code Folding: Fold Tag Attributes"
 			]
 		],
-		"width": 602.0
+		"width": 449.0
 	},
 	"console":
 	{
@@ -1141,6 +1193,7 @@
 		"height": 0.0,
 		"where_history":
 		[
+			"/home/luke/dev/projects/PythonicWiki/app/static/less/css"
 		]
 	},
 	"find_state":
@@ -1148,6 +1201,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"!\"",
+			"lessc",
+			"app/static/js/bin",
+			"app/static/css/bin",
+			"css",
 			"activate",
 			"new",
 			"\n",
@@ -1270,12 +1328,7 @@
 			"html",
 			"\n    ",
 			"= ->",
-			"\n    ",
-			":",
-			"rows",
-			";",
-			"removeiMark",
-			"getElements"
+			"\n    "
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1297,7 +1350,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -1305,15 +1358,15 @@
 					"file": "app/main.py",
 					"settings":
 					{
-						"buffer_size": 6403,
+						"buffer_size": 2079,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6149,
-								6149
+								2079,
+								2079
 							]
 						],
 						"settings":
@@ -1323,7 +1376,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2486.0,
+						"translation.y": 216.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1358,6 +1411,163 @@
 				},
 				{
 					"buffer": 2,
+					"file": "Makefile",
+					"settings":
+					{
+						"buffer_size": 2466,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2334,
+								2334
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 882.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/static/coffee/build.json",
+					"settings":
+					{
+						"buffer_size": 66,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1,
+								1
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/static/coffee/test.coffee",
+					"settings":
+					{
+						"buffer_size": 50,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								50,
+								50
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/static/less/main.less",
+					"settings":
+					{
+						"buffer_size": 137,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								55,
+								55
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/LESS/LESS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": ".scripts/clean.sh",
+					"settings":
+					{
+						"buffer_size": 152,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10,
+								10
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
 					"file": "/home/luke/dev/projects/iMarker/prototype/app/handlers/base.py",
 					"settings":
 					{

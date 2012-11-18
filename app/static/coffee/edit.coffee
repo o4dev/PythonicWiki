@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env coffee
 #
 # Copyright (c) 2012, Luke Southam <luke@devthe.com>
 # All rights reserved.
@@ -32,12 +32,30 @@
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
-"""
-template's __init__
-"""
 
-__author__ = "Luke Southam <luke@devthe.com>"
-__copyright__ = "Copyright 2012, DEVTHE.COM LIMITED"
-__license__ = "The BSD 3-Clause License"
-__status__ = "Development"
+window.getEditor = ->
+  baseUrl = "http://ajaxorg.github.com/ace-builds/textarea/src/"
+  load = window.__ace_loader__ = (path, module, callback) ->
+    head = document.getElementsByTagName("head")[0]
+    s = document.createElement("script")
+    s.src = baseUrl + path
+    head.appendChild s
+    s.onload = ->
+      window.__ace_shadowed__.require [module], callback
 
+  load "ace-bookmarklet.js", "ace/ext/textarea", ->
+    ace = window.__ace_shadowed__
+    ace.options =
+      mode: "text"
+      theme: "Monokai"
+      gutter: "true"
+      fontSize: "16px"
+      softWrap: "off"
+      showPrintMargin: "false"
+      useSoftTabs: "true"
+      showInvisibles: "false"
+
+    Event = ace.require("ace/lib/event")
+    area = document.getElementById("editor")
+    if area
+      ace.transformTextarea area, load

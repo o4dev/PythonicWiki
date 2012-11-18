@@ -33,11 +33,11 @@
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 """
-template's __init__
+Utils
 """
 
-__author__ = "Luke Southam <luke@devthe.com>"
-__copyright__ = "Copyright 2012, DEVTHE.COM LIMITED"
-__license__ = "The BSD 3-Clause License"
-__status__ = "Development"
+import re
 
+fix_pagename = lambda name: re.sub("([a-z])([A-Z])","\g<1> \g<2>", name)
+
+strip_tags = lambda html: re.sub('<[^<]+?>', '', html)

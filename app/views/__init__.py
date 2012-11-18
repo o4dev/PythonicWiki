@@ -38,14 +38,33 @@ The Jinja template's __init__
 
 import os
 import jinja2
+from utils import fix_pagename, strip_tags
 
 __author__ = "Luke Southam <luke@devthe.com>"
 __copyright__ = "Copyright 2012, DEVTHE.COM LIMITED"
 __license__ = "The BSD 3-Clause License"
 __status__ = "Development"
 
-def subjectURL(value):
-    return urllib.quote(value.subject.replace(" ", "_"), '')
-jinja_environment = jinja2.Environment(autoescape=True, loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), '.')))
+DEBUG = True if os.environ.get(
+    'SERVER_SOFTWARE', '').startswith('Development') else False
 
-root_page = jinja_environment.get_template('index.html')
+
+if DEBUG:
+    jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
+                                       os.path.join(
+                                       os.path.dirname(__file__), '.')),
+                        extensions=['pyjade.ext.jinja.PyJadeExtension'], cache_size=0)
+else:
+    jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
+                                       os.path.join(
+                                       os.path.dirname(__file__), '.')),
+                        extensions=['pyjade.ext.jinja.PyJadeExtension'])
+
+jinja_env.globals['fix_pagename'] = fix_pagename
+jinja_env.globals['strip_tags'] = strip_tags
+jinja_env.globals['str'] = str
+
+view_tpl = jinja_env.get_template('view.jade')
+edit_tpl = jinja_env.get_template('edit.jade')
+history_tpl = jinja_env.get_template('history.jade')
+view_404_tpl = jinja_env.get_template('view.404.jade')

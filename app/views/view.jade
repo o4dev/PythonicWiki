@@ -1,0 +1,25 @@
+extends base
+
+block title
+	#{fix_pagename(page.name)}
+
+block h2
+	#{fix_pagename(page.name)}
+
+block options
+	span
+		include includes/login_greeting
+
+		|   |   
+
+		a(href="/_history/#{page.name}") History
+
+		|   |    
+
+		if user.active
+			a(href="/_edit/#{page.name}") Edit
+		else
+			a(href="#{user.login}") Login
+
+block content
+	#{edit.data}

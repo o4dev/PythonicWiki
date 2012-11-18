@@ -1,0 +1,51 @@
+doctype 5
+html
+
+	head
+		block styles
+			link(rel='stylesheet', href="/static/css/main.min.css")
+
+		title PythonicWiki:
+			block title
+
+	body
+		header#header
+
+			hgroup
+				h1 
+					a(href="/") PythonicWiki:
+				h2
+					block h2
+
+			#options
+				block options
+
+		ul#menubar
+			li
+				a(href='/FrontPage') FrontPage
+			li
+				a(href='/WhyPython') Why Python
+			li
+				a(href='/WSGI') WSGI
+				ul
+					li
+						a(href='/WSGI') What is WSGI ?
+					li
+						a(href='/WSGI#fwk') Framework comparison
+					li
+						a(href='/WSGI#mware') Middleware
+					li
+						a(href='/WSGI#diy') DIY Framework
+			li
+				a(href='/CGI') CGI
+			li
+				a(href='/WebSockets') Web Sockets
+			li
+				a(href='Links') Links
+
+
+		#content
+			block content
+
+		block scripts
+			script(src="/static/js/main.js")

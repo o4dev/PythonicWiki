@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+# !/usr/bin/env python
+# -*- coding: UTF-8 -*-
 #
 # Copyright (c) 2012, Luke Southam <luke@devthe.com>
 # All rights reserved.
@@ -36,8 +37,9 @@
 PythonicWiki
 """
 
+import os
 import webapp2
-from templates import root_page
+from handlers import view, edit, history
 
 __author__ = "Luke Southam <luke@devthe.com>"
 __copyright__ = "Copyright 2012, DEVTHE.COM LIMITED"
@@ -45,10 +47,18 @@ __license__ = "The BSD 3-Clause License"
 __status__ = "Development"
 
 
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write(root_page.render({'msg':"Hello world from PythonicWiki"}))
+DEBUG = True if os.environ.get(
+    'SERVER_SOFTWARE', '').startswith('Development') else False
 
-app = webapp2.WSGIApplication([('/', MainHandler)],
-                              debug=True)
+PAGE_RE = r'(?:([a-zA-Z0-9]+)/?)?'
 
+config = {}
+config['webapp2_extras.sessions'] = {
+    'secret_key': 'jkabsUHD 234Q$£tqqafenSKDZVAsre%$tqfw£w'
+}
+
+app = webapp2.WSGIApplication([
+    ('/_edit/' + PAGE_RE, edit.Handler),
+    ('/_history/' + PAGE_RE, history.Handler),
+    ('/' + PAGE_RE, view.Handler)],
+    debug=DEBUG, config=config)

@@ -1,0 +1,31 @@
+extends base
+
+block title
+	#{fix_pagename(page_name)} editing
+
+block h2
+	#{fix_pagename(page_name)}
+	i editing
+
+block options
+	span
+		include includes/login_greeting
+
+		|   |   
+
+		a(href="/_history/#{page_name}") History
+
+		|   |   
+
+		a(href="/#{page_name}") View
+
+
+block content
+	form(method="post")
+		textarea#editor(name="data")
+			| #{edit_data}
+		input#save_btn(type="submit", value="SAVE!")
+
+block append scripts
+	script
+		getEditor()

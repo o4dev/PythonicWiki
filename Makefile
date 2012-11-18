@@ -45,41 +45,47 @@ CSS := $(LESS)/css
 COFFEE := $(STATIC)/coffee
 JS :=  $(COFFEE)/js
 
+cleanCss:
+	! test -d $(CSS) || rm -r $(CSS)
+	mkdir $(CSS)
 
-clean:
+cleanJs:
+	! test -d $(JS) || rm -r $(JS)
+	mkdir $(JS)
+
+clean: cleanCss cleanJs
 	find . -type f -name '*.pyc' -exec rm -f {} ';'
 	find . -type f -name '.*.swp' -exec rm -f {} ';'
 	find . -type f -name '*~' -exec rm -f {} ';'
-	! test -d $(CSS) || rm -r $(CSS)
-	! test -d $(JS) || rm -r $(JS)
-	mkdir $(CSS)
-	mkdir $(JS)
 
 
-server: clean less coffee
-	@pid=`lsof -i tcp:8080 | tail -n +2 | awk '{print $2}'`
-	@if [ ! -z "$(pid)" ];then \
-		kill $(pid); \
+server: clean css js
+	pid=`lsof -i tcp:8080 | tail -n +2 | awk '{print $2}'`
+	if [ -n "$$pid" ]; then \
+		kill $$pid; \
 	fi
 	dev_appserver.py app &
-	SERVER_PID=$!
-	sleep 10
+	@sleep 5
 	chromium-browser --temp-profile --app=http://localhost:8080/
-	kill $(SERVER_PID)
+	kill `lsof -i tcp:8080 | tail -n +2 | awk '{print $2}'`
+	wait `lsof -i tcp:8080 | tail -n +2 | awk '{print $2}'`
 
 commit: clean
 	git add .
 	git commit -a
 
-push: commit
+push: clean
 	git push
 
-less: clean
+pull:
+	git pull
+
+css: cleanCss
 	python .scripts/less.py $(LESS)
 
 
-coffee:
+js: cleanJs
 	python .scripts/build.py $(COFFEE) > $(JS)/main.js
 
 deploy:
-	#..
+	appcfg.py update app/

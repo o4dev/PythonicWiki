@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env coffee
 #
 # Copyright (c) 2012, Luke Southam <luke@devthe.com>
 # All rights reserved.
@@ -32,12 +32,11 @@
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
-"""
-template's __init__
-"""
 
-__author__ = "Luke Southam <luke@devthe.com>"
-__copyright__ = "Copyright 2012, DEVTHE.COM LIMITED"
-__license__ = "The BSD 3-Clause License"
-__status__ = "Development"
 
+$("#menubar li").bind
+  mouseenter: ->
+    $("ul", this).stop().fadeIn "fast"
+
+  mouseleave: ->
+    $("ul", this).stop().hide()

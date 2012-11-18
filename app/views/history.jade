@@ -1,0 +1,26 @@
+extends base
+
+block title
+	#{fix_pagename(page.name)} edits
+
+block h2
+	#{fix_pagename(page.name)}
+	i edits
+
+block options
+	span
+		include includes/login_greeting
+		if not user.active
+			a(href="#{user.login}") Login?
+
+
+block content
+	ul#edits
+		each edit, i in edits
+			li.edit
+				a(href="/#{page.name}?edit=#{i}")
+					| '
+					span.edit_data !{strip_tags(edit.data)[:20]}
+					| '... by 
+					span.edit_user !{edit.user.name}
+				time.edit_datetime #{str(edit.datetime)[:18]}

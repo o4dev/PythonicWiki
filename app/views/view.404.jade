@@ -1,0 +1,26 @@
+extends base
+
+block title
+	#{fix_pagename(page_name)} 404
+
+block h2
+	#{fix_pagename(page_name)}
+	i 404
+
+block options
+	span
+		include includes/login_greeting
+		if not user.active
+			a(href="#{user.login}") Login?
+
+block content
+	h1.error 404 - Not Found
+	h2.inline '#{page_name}' does not exist
+	if user.active
+		i
+			| - You can create it 
+			a(href="/_edit/#{page_name}") HERE!
+	else
+		i
+			a(href="#{user.login}") - Login
+			|    to create it
