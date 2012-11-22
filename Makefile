@@ -87,5 +87,5 @@ css: cleanCss
 js: cleanJs
 	python .scripts/build.py $(COFFEE) > $(JS)/main.js
 
-deploy:
+deploy: js css
 	appcfg.py update app/
