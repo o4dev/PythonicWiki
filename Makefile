@@ -1,4 +1,4 @@
-# Makefile for PythonicWiki
+# Makefile
 #
 # Copyright (c) 2012, Luke Southam <luke@devthe.com>
 # All rights reserved.
@@ -47,10 +47,12 @@ JS :=  $(COFFEE)/js
 
 cleanCss:
 	! test -d $(CSS) || rm -r $(CSS)
+	[ ! -L $(STATIC)/css ] || rm $(STATIC)/css  
 	mkdir $(CSS)
 
 cleanJs:
 	! test -d $(JS) || rm -r $(JS)
+	[ ! -L $(STATIC)/js ] || rm $(STATIC)/js
 	mkdir $(JS)
 
 clean: cleanCss cleanJs
@@ -82,10 +84,12 @@ pull:
 
 css: cleanCss
 	python .scripts/less.py $(LESS)
+	ln -s ../../$(CSS) $(STATIC)/css
 
 
 js: cleanJs
 	python .scripts/build.py $(COFFEE) > $(JS)/main.js
+	ln -s ../../$(JS) $(STATIC)/js
 
 deploy: js css
 	appcfg.py update app/
