@@ -539,7 +539,7 @@
 			"file": "Makefile",
 			"settings":
 			{
-				"buffer_size": 2603,
+				"buffer_size": 2740,
 				"line_ending": "Unix"
 			}
 		},
@@ -564,7 +564,7 @@
 			"file": "app/views/base.jade",
 			"settings":
 			{
-				"buffer_size": 1039,
+				"buffer_size": 1003,
 				"line_ending": "Unix"
 			}
 		},
@@ -1401,15 +1401,15 @@
 					"file": "Makefile",
 					"settings":
 					{
-						"buffer_size": 2603,
+						"buffer_size": 2740,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2450,
-								2450
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1434,8 +1434,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								2072,
+								2072
 							]
 						],
 						"settings":
@@ -1445,7 +1445,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1048.0,
+						"translation.y": 463.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1481,15 +1481,15 @@
 					"file": "app/views/base.jade",
 					"settings":
 					{
-						"buffer_size": 1039,
+						"buffer_size": 1003,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								992,
+								992
 							]
 						],
 						"settings":
@@ -1498,7 +1498,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 432.0,
+						"translation.y": 225.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
