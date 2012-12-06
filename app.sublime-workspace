@@ -4,6 +4,58 @@
 		"selected_items":
 		[
 			[
+				"vid",
+				"video_file"
+			],
+			[
+				"video",
+				"video_file"
+			],
+			[
+				"F",
+				"FeedBack"
+			],
+			[
+				"st",
+				"store_feed_back"
+			],
+			[
+				"de",
+				"def	Function"
+			],
+			[
+				"ch",
+				"chan_name"
+			],
+			[
+				"xhr",
+				"xhr"
+			],
+			[
+				"send",
+				"sendMessage"
+			],
+			[
+				"on",
+				"onClose"
+			],
+			[
+				"cone",
+				"console"
+			],
+			[
+				"c",
+				"channel"
+			],
+			[
+				"h",
+				"handlers  (module)"
+			],
+			[
+				"re",
+				"request  (variable)"
+			],
+			[
 				"mari",
 				"margin-top"
 			],
@@ -72,10 +124,6 @@
 				"tpl_404"
 			],
 			[
-				"re",
-				"response"
-			],
-			[
 				"magin",
 				"margin-top"
 			],
@@ -94,10 +142,6 @@
 			[
 				"back",
 				"background"
-			],
-			[
-				"F",
-				"FileSystemLoader"
 			],
 			[
 				"E",
@@ -218,10 +262,6 @@
 			[
 				"C",
 				"Alpha_Collection"
-			],
-			[
-				"c",
-				"collection"
 			],
 			[
 				"not",
@@ -452,10 +492,6 @@
 				"delete"
 			],
 			[
-				"de",
-				"default_value"
-			],
-			[
 				"mar",
 				"margin"
 			],
@@ -478,101 +514,32 @@
 			[
 				"write",
 				"writelines  (function)"
-			],
-			[
-				"Re",
-				"RequestHandler"
-			],
-			[
-				"PA",
-				"PAGE_RE"
-			],
-			[
-				"en",
-				"endif"
-			],
-			[
-				"rel",
-				"relative"
-			],
-			[
-				"style",
-				"stylesheet"
-			],
-			[
-				"writ",
-				"writeActivateForm"
-			],
-			[
-				"se",
-				"session"
-			],
-			[
-				"time",
-				"timedelta  (class)"
-			],
-			[
-				"get_",
-				"get_imark_by_id"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "app/static/less/imports/layout.less",
+			"file": "app/main.py",
 			"settings":
 			{
-				"buffer_size": 2284,
+				"buffer_size": 2596,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/static/less/imports/vars.less",
+			"file": "app/handlers/examples/FeedBack.py",
 			"settings":
 			{
-				"buffer_size": 1927,
+				"buffer_size": 2983,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Makefile",
+			"file": "app/models.py",
 			"settings":
 			{
-				"buffer_size": 2740,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/static/less/imports/popup.less",
-			"settings":
-			{
-				"buffer_size": 2767,
-				"line_ending": "Unix",
-				"name": ".popup > aside{"
-			}
-		},
-		{
-			"file": "app/static/less/imports/editor.less",
-			"settings":
-			{
-				"buffer_size": 1772,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/views/base.jade",
-			"settings":
-			{
-				"buffer_size": 1003,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/static/less/main.less",
-			"settings":
-			{
-				"buffer_size": 1726,
+				"buffer_size": 4108,
 				"line_ending": "Unix"
 			}
 		}
@@ -580,9 +547,13 @@
 	"build_system": "server",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 54.0,
 		"selected_items":
 		[
+			[
+				"#!",
+				"Snippet: #!/usr/bin/env"
+			],
 			[
 				"insta",
 				"Package Control: Install Package"
@@ -602,10 +573,6 @@
 			[
 				"pep8",
 				"PEP8: Format Code"
-			],
-			[
-				"#!",
-				"Snippet: #!/usr/bin/env"
 			],
 			[
 				"coff",
@@ -1028,7 +995,7 @@
 				"Code Folding: Fold Tag Attributes"
 			]
 		],
-		"width": 449.0
+		"width": 602.0
 	},
 	"console":
 	{
@@ -1045,28 +1012,40 @@
 	},
 	"file_history":
 	[
-		"/home/luke/dev/projects/PythonicWiki/app/fix.css",
+		"/home/luke/bin/putlocker-vlc",
+		"/home/luke/dev/projects/PythonicWiki/app/handlers/examples/untitled",
+		"/home/luke/dev/projects/PythonicWiki/app/app.yaml",
+		"/home/luke/.bashrc",
+		"/home/luke/dev/projects/PythonicWiki/app/handlers/examples/WebSocket.py",
+		"/home/luke/dev/projects/PythonicWiki/app/static/coffee/lib/socket.js",
+		"/home/luke/dev/projects/PythonicWiki/app/views/websockets.jade",
+		"/home/luke/dev/projects/PythonicWiki/app/static/coffee/websockets.coffee",
+		"/home/luke/dev/projects/PythonicWiki/app/static/coffee/build.json",
+		"/home/luke/dev/projects/PythonicWiki/app/views/__init__.py",
+		"/home/luke/dev/projects/PythonicWiki/app/main.py",
+		"/home/luke/dev/projects/PythonicWiki/app/handlers/view.py",
+		"/home/luke/dev/projects/PythonicWiki/app/handlers/examples/__init__.py",
+		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/popup.less",
+		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/layout.less",
+		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/vars.less",
+		"/home/luke/dev/projects/PythonicWiki/Makefile",
+		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/editor.less",
 		"/home/luke/dev/projects/PythonicWiki/app/views/base.jade",
+		"/home/luke/dev/projects/PythonicWiki/app/static/less/main.less",
+		"/home/luke/dev/projects/PythonicWiki/app/fix.css",
 		"/home/luke/dev/projects/PythonicWiki/app/views/includes/login_greeting.jade",
 		"/home/luke/dev/projects/PythonicWiki/app/views/view.jade",
 		"/home/luke/dev/projects/PythonicWiki/app/views/view.404.jade",
 		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/utils.less",
 		"/home/luke/dev/projects/PythonicWiki/app/views/history.jade",
 		"/home/luke/dev/projects/PythonicWiki/app/views/edit.jade",
-		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/vars.less",
-		"/home/luke/dev/projects/PythonicWiki/app/static/less/main.less",
 		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/menubar.less",
-		"/home/luke/dev/projects/PythonicWiki/app/handlers/view.py",
 		"/home/luke/dev/projects/PythonicWiki/app/handlers/edit.py",
 		"/home/luke/dev/projects/PythonicWiki/app/utils.py",
-		"/home/luke/dev/projects/PythonicWiki/app/views/__init__.py",
 		"/home/luke/dev/projects/PythonicWiki/app/handlers/base.py",
 		"/home/luke/dev/projects/PythonicWiki/app/handlers/history.py",
-		"/home/luke/dev/projects/PythonicWiki/Makefile",
-		"/home/luke/dev/projects/PythonicWiki/app/main.py",
 		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/edits.less",
 		"/home/luke/dev/projects/PythonicWiki/app/models.py",
-		"/home/luke/dev/projects/PythonicWiki/app/app.yaml",
 		"/home/luke/Documents/school/Task 6/graphics.css",
 		"/home/luke/dev/projects/PythonicWiki/app/static/css/main.css",
 		"/home/luke/Documents/school/Task 6/python.html",
@@ -1075,16 +1054,12 @@
 		"/home/luke/dev/projects/iMarker/prototype/app/main.py",
 		"/home/luke/dev/projects/old/PythonicWiki.old/models/wiki.py",
 		"/home/luke/dev/projects/PythonicWiki/.scripts/build.py",
-		"/home/luke/dev/projects/PythonicWiki/app/static/coffee/build.json",
 		"/home/luke/dev/projects/PythonicWiki/app/static/coffee/edit.coffee",
 		"/home/luke/dev/projects/PythonicWiki/app/static/coffee/menubar.coffee",
-		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/editor.less",
-		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/layout.less",
 		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/basic.less",
 		"/home/luke/dev/projects/PythonicWiki/app/static/less/imports/basics.less",
 		"/home/luke/dev/projects/PythonicWiki/app/views/page.404.jade",
 		"/home/luke/dev/projects/PythonicWiki/app/models.pt",
-		"/home/luke/.bashrc",
 		"/home/luke/dev/projects/PythonicWiki/.scripts/clean.sh",
 		"/home/luke/dev/projects/PythonicWiki/app/static/coffee/test.coffee",
 		"/home/luke/dev/projects/iMarker/prototype/app/handlers/base.pyc",
@@ -1164,15 +1139,7 @@
 		"/home/luke/dev/projects/tester/.scripts/activate",
 		"/home/luke/dev/project_templates/gae/webapp2_genshi_less_coffee/static/.scripts/activate",
 		"/home/luke/dev/project_templates/gae/webapp2_genshi_less_coffee_bootstrap/static/.scripts/activate",
-		"/home/luke/dev/projects/iMarker/prototype/.sublime-project",
-		"/home/luke/dev/projects/iMarker/prototype/app/less/main..less",
-		"/home/luke/dev/project_templates/gae/webapp2_genshi_less_coffee/logger.py",
-		"/home/luke/dev/projects/gae/projects/PythonicWiki/examples/handlers/sockets/__init__.py",
-		"/home/luke/dev/lib/less.py",
-		"/home/luke/dev/projects/gae/projects/PythonicWiki/wiki/less/vars.less",
-		"/home/luke/dev/projects/gae/projects/PythonicWiki/wiki/templates/base.html",
-		"/home/luke/dev/projects/gae/projects/PythonicWiki/wiki/templates/page.html",
-		"/home/luke/dev/projects/gae/projects/PythonicWiki/wiki/templates/history.html"
+		"/home/luke/dev/projects/iMarker/prototype/.sublime-project"
 	],
 	"find":
 	{
@@ -1191,6 +1158,17 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"page",
+			"perm",
+			"permission",
+			"BASE_URL",
+			"baseurl",
+			"	  ",
+			" = ",
+			"		    ",
+			"data",
+			"get",
+			"view",
 			"@",
 			"aside.",
 			"span",
@@ -1307,18 +1285,7 @@
 			"hasattr(self, 'user'):",
 			"urlparse",
 			"urllib",
-			"host",
-			"CanonicalizeUrl",
-			"\n",
-			" = \"",
-			" = = ",
-			" = ",
-			"\")",
-			"(\"",
-			"=\"",
-			"Canonicalize",
-			" = ",
-			";\n"
+			"host"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1340,191 +1307,90 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/static/less/imports/layout.less",
+					"file": "app/main.py",
 					"settings":
 					{
-						"buffer_size": 2284,
+						"buffer_size": 2596,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2282,
-								2282
+								2453,
+								2453
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LESS/LESS.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"spell_check": true,
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 702.0,
+						"translation.y": 585.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "app/static/less/imports/vars.less",
+					"file": "app/handlers/examples/FeedBack.py",
 					"settings":
 					{
-						"buffer_size": 1927,
+						"buffer_size": 2983,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								2535,
+								2535
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/LESS/LESS.tmLanguage"
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 615.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "Makefile",
+					"file": "app/models.py",
 					"settings":
 					{
-						"buffer_size": 2740,
+						"buffer_size": 4108,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								3334,
+								3334
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1188.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/static/less/imports/popup.less",
-					"settings":
-					{
-						"buffer_size": 2767,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2072,
-								2072
-							]
-						],
-						"settings":
-						{
-							"auto_name": ".popup > aside{",
-							"syntax": "Packages/LESS/LESS.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 463.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "app/static/less/imports/editor.less",
-					"settings":
-					{
-						"buffer_size": 1772,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1643,
-								1643
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/LESS/LESS.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 324.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "app/views/base.jade",
-					"settings":
-					{
-						"buffer_size": 1003,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								992,
-								992
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 225.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "app/static/less/main.less",
-					"settings":
-					{
-						"buffer_size": 1726,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1722,
-								1722
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/LESS/LESS.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 225.0,
+						"translation.y": 1440.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

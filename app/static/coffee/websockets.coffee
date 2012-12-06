@@ -1,5 +1,4 @@
-# !/usr/bin/env python
-# -*- coding: UTF-8 -*-
+#!/usr/bin/env coffee
 #
 # Copyright (c) 2012, Luke Southam <luke@devthe.com>
 # All rights reserved.
@@ -33,37 +32,42 @@
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
-"""
-PythonicWiki
-"""
 
-import os
-import webapp2
-from handlers import view, edit, history
-from handlers.examples import FeedBack #, WebSocket
+log = null
 
-__author__ = "Luke Southam <luke@devthe.com>"
-__copyright__ = "Copyright 2012, DEVTHE.COM LIMITED"
-__license__ = "The BSD 3-Clause License"
-__status__ = "Development"
+window.chatClient = (token) ->
+	window.token = token
+	channel = new goog.appengine.Channel(token)
+	window.channel = channel
+	socket = channel.open()
+	window.socket = socket
+	socket.onmessage = onMessage
+	socket.onopen = onOpen
+	socket.onerror = onError
+	socket.onclose = onClose
+	log = $("#log")
+	$("#send").click(sendMessage)
+	return socket
+
+sendMessage = ->
+	msg = $("#chat input").val()
+	console.log ("SEND:" + msg)
+	xhr = new XMLHttpRequest()
+	xhr.open("POST", "?", true)
+	xhr.send("msg=#{msg}")
 
 
-DEBUG = True if os.environ.get(
-    'SERVER_SOFTWARE', '').startswith('Development') else False
+onMessage = (msg) ->
+	console.log ("NEW:" + msg)
+	log.append("<li>#{msg}</li>")
 
-PAGE_RE = r'(?:([a-zA-Z0-9]+)/?)?'
+onOpen = ->
+	console.log("OPEN: connection opened")
 
-config = {}
-config['webapp2_extras.sessions'] = {
-    'secret_key': 'jkabsUHD 234Q$£tqqafenSKDZVAsre%$tqfw£w'
-    # Currently not used however requires new one to be generated and hidden
-    # from Open Source GitHub repository if ever needed. 
-}
+onClose = ->
+	console.log("CLOSE: connection closed")
 
-app = webapp2.WSGIApplication([
-    ('/_edit/' + PAGE_RE, edit.Handler),
-    ('/_history/' + PAGE_RE, history.Handler),
-    ('/_examples/Feedback', FeedBack.Handler),
-    #('/_examples/WebSocket', WebSocket.Handler),
-    ('/' + PAGE_RE, view.Handler)],
-    debug=DEBUG, config=config)
+onError = (error) ->
+	console.log("ERROR" + error)
+
+window.sendMessage = sendMessage

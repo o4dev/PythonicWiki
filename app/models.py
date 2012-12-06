@@ -131,3 +131,19 @@ def add_edit(page, user, data):
     edit.data = data
     edit.put()
     return edit
+
+
+##################### example's models ###############
+
+class FeedBack(Model):
+    ip = StringProperty()
+    data = TextProperty()
+
+def add_feedback(ip, data):
+    fb = FeedBack()
+    fb.ip = ip
+    fb.data = data
+    fb.put()
+    return fb
+
+################################################

@@ -1,5 +1,4 @@
-# !/usr/bin/env python
-# -*- coding: UTF-8 -*-
+#!/usr/bin/env python
 #
 # Copyright (c) 2012, Luke Southam <luke@devthe.com>
 # All rights reserved.
@@ -34,36 +33,53 @@
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 """
-PythonicWiki
+FeedBack example
 """
 
-import os
-import webapp2
-from handlers import view, edit, history
-from handlers.examples import FeedBack #, WebSocket
+from handlers.base import BaseHandler
+from google.appengine.api import channel
+from views import view_tpl as tpl
+from models import add_feedback
+
 
 __author__ = "Luke Southam <luke@devthe.com>"
 __copyright__ = "Copyright 2012, DEVTHE.COM LIMITED"
 __license__ = "The BSD 3-Clause License"
 __status__ = "Development"
 
+chan_name = "chat"
 
-DEBUG = True if os.environ.get(
-    'SERVER_SOFTWARE', '').startswith('Development') else False
+class obj(object):
+    pass
 
-PAGE_RE = r'(?:([a-zA-Z0-9]+)/?)?'
+page = obj()
+page.name = "Feedback"
+page.data = "<h1 style='width:100%;text-align:center;'>Thank you for your feedback ! :)</h1>"
 
-config = {}
-config['webapp2_extras.sessions'] = {
-    'secret_key': 'jkabsUHD 234Q$£tqqafenSKDZVAsre%$tqfw£w'
-    # Currently not used however requires new one to be generated and hidden
-    # from Open Source GitHub repository if ever needed. 
-}
+page2 = obj()
+page2.name = "Feedback"
+page2.data = """<h1>Give us some feedback on our wiki!</h1>
+<form action="/_examples/Feedback" method="post">
+<lable>Message</lable>
+<textarea name="data"></textarea>
+<input type="submit">
+</form>
+"""
 
-app = webapp2.WSGIApplication([
-    ('/_edit/' + PAGE_RE, edit.Handler),
-    ('/_history/' + PAGE_RE, history.Handler),
-    ('/_examples/Feedback', FeedBack.Handler),
-    #('/_examples/WebSocket', WebSocket.Handler),
-    ('/' + PAGE_RE, view.Handler)],
-    debug=DEBUG, config=config)
+class Handler(BaseHandler):
+    def get(self):
+        if self.request.cookies.get('done'):
+            return self.write(tpl.render(page=page, user=self.user, edit=page))
+        self.write(tpl.render(page=page2, user=self.user, edit=page2))
+    def post(self):
+        if not self.request.cookies.get('done'):
+            self.store_feed_back()
+    def store_feed_back(self):
+        ip = self.request.remote_addr
+        data = self.request.get("data")
+        add_feedback(ip, data)
+        self.finalize()
+    def finalize(self):
+        self.response.set_cookie('done', '1')
+        self.redirect('/_examples/Feedback')
+

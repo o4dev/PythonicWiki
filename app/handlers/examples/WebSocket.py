@@ -1,5 +1,4 @@
-# !/usr/bin/env python
-# -*- coding: UTF-8 -*-
+#!/usr/bin/env python
 #
 # Copyright (c) 2012, Luke Southam <luke@devthe.com>
 # All rights reserved.
@@ -34,36 +33,26 @@
 # THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 """
-PythonicWiki
+WebSocket example
 """
 
-import os
-import webapp2
-from handlers import view, edit, history
-from handlers.examples import FeedBack #, WebSocket
+from handlers.base import BaseHandler
+from google.appengine.api import channel
+from views import websockets_tpl as tpl
+import logging
 
 __author__ = "Luke Southam <luke@devthe.com>"
 __copyright__ = "Copyright 2012, DEVTHE.COM LIMITED"
 __license__ = "The BSD 3-Clause License"
 __status__ = "Development"
 
+chan_name = "chat"
 
-DEBUG = True if os.environ.get(
-    'SERVER_SOFTWARE', '').startswith('Development') else False
 
-PAGE_RE = r'(?:([a-zA-Z0-9]+)/?)?'
-
-config = {}
-config['webapp2_extras.sessions'] = {
-    'secret_key': 'jkabsUHD 234Q$£tqqafenSKDZVAsre%$tqfw£w'
-    # Currently not used however requires new one to be generated and hidden
-    # from Open Source GitHub repository if ever needed. 
-}
-
-app = webapp2.WSGIApplication([
-    ('/_edit/' + PAGE_RE, edit.Handler),
-    ('/_history/' + PAGE_RE, history.Handler),
-    ('/_examples/Feedback', FeedBack.Handler),
-    #('/_examples/WebSocket', WebSocket.Handler),
-    ('/' + PAGE_RE, view.Handler)],
-    debug=DEBUG, config=config)
+class Handler(BaseHandler):
+    def get(self):
+        self.write(tpl.render(token=channel.create_channel(chan_name)))
+    def post(self):
+        msg = self.request.get("msg", default_value="blank")
+        logging.debug("channel.send_message(%s, %s)" %(chan_name, msg))
+        channel.send_message(chan_name, msg)
