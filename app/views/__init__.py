@@ -66,6 +66,7 @@ jinja_env.globals['str'] = str
 
 websockets_tpl = jinja_env.get_template('websockets.jade')
 channel_tpl = jinja_env.get_template('websockets_channel.jade')
+feedback_tpl = jinja_env.get_template('feedback.jade')
 view_tpl = jinja_env.get_template('view.jade')
 edit_tpl = jinja_env.get_template('edit.jade')
 history_tpl = jinja_env.get_template('history.jade')

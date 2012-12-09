@@ -23,11 +23,3 @@ block options
 
 block content
 	#{edit.data}
-	footer#history
-		button#getHistory get history
-
-block append scripts
-	script
-		$("#getHistory").click(function(){
-			window.getHistory("#{page.name}");
-		});

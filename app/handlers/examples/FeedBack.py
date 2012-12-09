@@ -38,7 +38,7 @@ FeedBack example
 
 from handlers.base import BaseHandler
 from google.appengine.api import channel
-from views import view_tpl as tpl
+from views import feedback_tpl as tpl
 from models import add_feedback
 
 

@@ -59,3 +59,8 @@ window.getEditor = ->
     area = document.getElementById("editor")
     if area
       ace.transformTextarea area, load
+
+window.getHistory = (page)->
+  $.get "/_history/#{page}", (data) ->
+    $('#history').html("<hr>")
+    $('#history').append($(data).find("#edits"))
