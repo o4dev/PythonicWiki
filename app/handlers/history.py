@@ -54,4 +54,5 @@ class Handler(BaseHandler):
         	return self.redirect("/"+name)
         history = get_edits(page)
         edits = [(history[i], i) for i in range(len(history))]
+        edits.reverse()
         self.write(tpl.render(page=page, edits=edits, user=self.user))

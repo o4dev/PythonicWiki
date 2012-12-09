@@ -53,5 +53,5 @@ class Handler(BaseHandler):
         page = get_page(name)
         if not page:
             return self.write(tpl_404.render(page_name=name, user=self.user))
-        edit = self.request.get("edit", default_value=None)
-        self.write(tpl.render(page=page, user=self.user, edit=get_edit(page, edit)))
+        edit = self.request.get("edit", default_value=-1)
+        self.write(tpl.render(page=page, user=self.user, edit=get_edit(page, edit), v=edit))

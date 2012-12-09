@@ -17,7 +17,7 @@ block options
 		|   |    
 
 		if user.active
-			a(href="/_edit/#{page.name}") Edit
+			a(href="/_edit/#{page.name}?edit=#{v}") Edit
 		else
 			a(href="#{user.login}") Login
 
