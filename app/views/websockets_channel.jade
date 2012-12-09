@@ -1,0 +1,23 @@
+extends base
+
+block title
+	| Web Socket
+
+block h2
+	| Web Socket
+	i example
+
+block content
+	br
+	br
+	br
+	lable Enter a chat-room name:
+	input
+	button Go!
+
+block append scripts
+	script
+		$("#content button").click(function(){
+			window.location.href = "/_examples/WebSocket/"+$('#content input').val();
+		});
+	

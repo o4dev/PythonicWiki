@@ -40,7 +40,7 @@ PythonicWiki
 import os
 import webapp2
 from handlers import view, edit, history
-from handlers.examples import FeedBack #, WebSocket
+from handlers.examples import FeedBack , WebSocket
 
 __author__ = "Luke Southam <luke@devthe.com>"
 __copyright__ = "Copyright 2012, DEVTHE.COM LIMITED"
@@ -63,7 +63,7 @@ config['webapp2_extras.sessions'] = {
 app = webapp2.WSGIApplication([
     ('/_edit/' + PAGE_RE, edit.Handler),
     ('/_history/' + PAGE_RE, history.Handler),
-    ('/_examples/Feedback', FeedBack.Handler),
-    #('/_examples/WebSocket', WebSocket.Handler),
+    (r'/_examples/Feedback/?', FeedBack.Handler),
+    (r'/_examples/WebSocket(?:/([a-zA-Z0-9]+))?/?', WebSocket.Handler),
     ('/' + PAGE_RE, view.Handler)],
     debug=DEBUG, config=config)

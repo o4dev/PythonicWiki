@@ -38,21 +38,57 @@ WebSocket example
 
 from handlers.base import BaseHandler
 from google.appengine.api import channel
-from views import websockets_tpl as tpl
+from google.appengine.api import memcache
+from views import websockets_tpl as tpl, channel_tpl as tpl2
 import logging
+import re
+import uuid
 
 __author__ = "Luke Southam <luke@devthe.com>"
 __copyright__ = "Copyright 2012, DEVTHE.COM LIMITED"
 __license__ = "The BSD 3-Clause License"
 __status__ = "Development"
 
-chan_name = "chat"
+
+PREFIX = "chat-"
+
+def gen_key():
+    uid = uuid.uuid4()
+    return uid.hex
+
+def get_keys(chan):
+    keys = memcache.get(PREFIX+chan)
+    if keys is not None:
+        return keys
+    memcache.set(PREFIX+chan, [])
+    return []
+
+def get_key(chan):
+    key = gen_key()
+    keys = get_keys(chan)
+    if key in keys:
+        return get_key(chan)
+    keys.append(key)
+    memcache.set(PREFIX+chan, keys)
+    return key
+
 
 
 class Handler(BaseHandler):
-    def get(self):
-        self.write(tpl.render(token=channel.create_channel(chan_name)))
-    def post(self):
-        msg = self.request.get("msg", default_value="blank")
-        logging.debug("channel.send_message(%s, %s)" %(chan_name, msg))
-        channel.send_message(chan_name, msg)
+    def get(self, chan=None, *args):
+        if not chan or chan == "/":
+            return self.write(tpl2.render())
+        key = get_key(chan)
+        token = channel.create_channel(key)
+        self.write(tpl.render(token=token, name=chan, uid=key))
+
+    def post(self, chan):
+        msg = self.request.get("msg")
+        uid = self.request.get("uid")
+        if not msg or not uid:
+            return
+        keys = get_keys(chan)
+        user = keys.index(uid)
+        msg = "<li>%s ---> <span>%s</span>" % (user, msg)
+        for key in get_keys(chan):
+            channel.send_message(key, msg)

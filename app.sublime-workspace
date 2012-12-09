@@ -4,6 +4,42 @@
 		"selected_items":
 		[
 			[
+				"u",
+				"uuid"
+			],
+			[
+				"c",
+				"content"
+			],
+			[
+				"get",
+				"get_keys"
+			],
+			[
+				"cl",
+				"client_id"
+			],
+			[
+				"ge",
+				"get_keys"
+			],
+			[
+				"ch",
+				"channel"
+			],
+			[
+				"toke",
+				"token"
+			],
+			[
+				"chan",
+				"channels"
+			],
+			[
+				"to",
+				"token"
+			],
+			[
 				"vid",
 				"video_file"
 			],
@@ -24,10 +60,6 @@
 				"def	Function"
 			],
 			[
-				"ch",
-				"chan_name"
-			],
-			[
 				"xhr",
 				"xhr"
 			],
@@ -42,10 +74,6 @@
 			[
 				"cone",
 				"console"
-			],
-			[
-				"c",
-				"channel"
 			],
 			[
 				"h",
@@ -78,10 +106,6 @@
 			[
 				"wsgi",
 				"WSGI"
-			],
-			[
-				"get",
-				"get_edits"
 			],
 			[
 				"text",
@@ -244,10 +268,6 @@
 				"font-size"
 			],
 			[
-				"to",
-				"toHide"
-			],
-			[
 				"error",
 				"errors"
 			],
@@ -314,10 +334,6 @@
 			[
 				"val",
 				"validate"
-			],
-			[
-				"cl",
-				"click"
 			],
 			[
 				"a",
@@ -498,22 +514,6 @@
 			[
 				"hr",
 				"hgroup"
-			],
-			[
-				"page",
-				"pagename"
-			],
-			[
-				"vide",
-				"video_id"
-			],
-			[
-				"list",
-				"list_exist"
-			],
-			[
-				"write",
-				"writelines  (function)"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "app/main.py",
 			"settings":
 			{
-				"buffer_size": 2596,
+				"buffer_size": 2620,
 				"line_ending": "Unix"
 			}
 		},
@@ -531,7 +531,7 @@
 			"file": "app/handlers/examples/FeedBack.py",
 			"settings":
 			{
-				"buffer_size": 2983,
+				"buffer_size": 3146,
 				"line_ending": "Unix"
 			}
 		},
@@ -548,6 +548,53 @@
 			"settings":
 			{
 				"buffer_size": 1053,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/static/coffee/websockets.coffee",
+			"settings":
+			{
+				"buffer_size": 2484,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/websockets_channel.jade",
+			"settings":
+			{
+				"buffer_size": 307,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/handlers/examples/WebSocket.py",
+			"settings":
+			{
+				"buffer_size": 3059,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/websockets.jade",
+			"settings":
+			{
+				"buffer_size": 593,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/__init__.py",
+			"settings":
+			{
+				"buffer_size": 2981,
 				"line_ending": "Unix"
 			}
 		}
@@ -1166,6 +1213,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"client_id",
+			"channel",
+			"name",
+			"genKey",
+			"channel",
 			"page",
 			"perm",
 			"permission",
@@ -1288,12 +1340,7 @@
 			"boilerplates",
 			"this.cssRefs",
 			"cssRefs",
-			"iMarks",
-			"self.redirect(self.user.login)",
-			"hasattr(self, 'user'):",
-			"urlparse",
-			"urllib",
-			"host"
+			"iMarks"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1315,7 +1362,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -1323,15 +1370,15 @@
 					"file": "app/main.py",
 					"settings":
 					{
-						"buffer_size": 2596,
+						"buffer_size": 2620,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2453,
-								2453
+								2529,
+								2529
 							]
 						],
 						"settings":
@@ -1342,7 +1389,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 585.0,
+						"translation.y": 495.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1352,15 +1399,15 @@
 					"file": "app/handlers/examples/FeedBack.py",
 					"settings":
 					{
-						"buffer_size": 2983,
+						"buffer_size": 3146,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2535,
-								2535
+								2070,
+								2070
 							]
 						],
 						"settings":
@@ -1387,8 +1434,8 @@
 						"selection":
 						[
 							[
-								3334,
-								3334
+								1670,
+								1644
 							]
 						],
 						"settings":
@@ -1398,7 +1445,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1440.0,
+						"translation.y": 150.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1425,7 +1472,168 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 135.0,
+						"translation.y": 225.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/static/coffee/websockets.coffee",
+					"settings":
+					{
+						"buffer_size": 2484,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2210,
+								2210
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 360.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/home/luke/dev/projects/PythonicWiki/app/static/coffee",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/views/websockets_channel.jade",
+					"settings":
+					{
+						"buffer_size": 307,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								151,
+								151
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "app/handlers/examples/WebSocket.py",
+					"settings":
+					{
+						"buffer_size": 3059,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2912,
+								2912
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 735.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "app/views/websockets.jade",
+					"settings":
+					{
+						"buffer_size": 593,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								416,
+								416
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Jade/Syntaxes/Jade.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "app/views/__init__.py",
+					"settings":
+					{
+						"buffer_size": 2981,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2772,
+								2772
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 540.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

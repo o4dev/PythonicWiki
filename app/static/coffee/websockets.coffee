@@ -35,7 +35,8 @@
 
 log = null
 
-window.chatClient = (token) ->
+window.chatClient = (token, uid) ->
+	window.uid = uid
 	window.token = token
 	channel = new goog.appengine.Channel(token)
 	window.channel = channel
@@ -47,27 +48,30 @@ window.chatClient = (token) ->
 	socket.onclose = onClose
 	log = $("#log")
 	$("#send").click(sendMessage)
+	$('#chat input').keypress (e) ->
+		if e.which == 13
+			sendMessage()
 	return socket
 
 sendMessage = ->
 	msg = $("#chat input").val()
+	$("#chat input").val("")
 	console.log ("SEND:" + msg)
 	xhr = new XMLHttpRequest()
-	xhr.open("POST", "?", true)
-	xhr.send("msg=#{msg}")
+	xhr.open("POST", "?msg=#{msg}&uid=#{window.uid}", true)
+	xhr.send()
 
 
 onMessage = (msg) ->
+	msg = msg.data
 	console.log ("NEW:" + msg)
-	log.append("<li>#{msg}</li>")
+	log.append(msg)
 
 onOpen = ->
-	console.log("OPEN: connection opened")
+	console.log("OPEN: connection open")
 
 onClose = ->
 	console.log("CLOSE: connection closed")
 
 onError = (error) ->
 	console.log("ERROR" + error)
-
-window.sendMessage = sendMessage

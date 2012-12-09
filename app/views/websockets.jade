@@ -8,11 +8,34 @@ block h2
 	i example
 
 block content
+	h1 Welcome to chat-room: #{name}
 	div(data-token= "#{token}")#chat
 		ul#log
-		input
-		button#send
+		input(style="width:80%;")#msg
+		button#send SEND!
+	style
+		#log{
+			list-style: none;
+			background: #FFDB4C;
+			color: #3779AF;
+			border-radius: 10px;
+		}
+		#log li {
+			margin-left: 0;
+			color: #333;
+		}
+		#log li span {
+			color: #3779AF;
+		}
+		}
+		#msg {
+			width: 80%;
+		}
+		#send {
+			width: 10%;
+		}
 
 block append scripts
 	script(src="/_ah/channel/jsapi")
-		window.chatClient($("#chat").attr("data-token"))
+	script
+		window.chatClient($("#chat").attr("data-token"), "#{uid}");

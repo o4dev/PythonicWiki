@@ -58,11 +58,16 @@ page.data = "<h1 style='width:100%;text-align:center;'>Thank you for your feedba
 
 page2 = obj()
 page2.name = "Feedback"
-page2.data = """<h1>Give us some feedback on our wiki!</h1>
+page2.data = """
+<h1>Give us some feedback on our wiki!</h1>
 <form action="/_examples/Feedback" method="post">
-<lable>Message</lable>
-<textarea name="data"></textarea>
-<input type="submit">
+    <table>
+        <tr>
+            <td style="vertical-align: top;"><lable>Message</lable></td>
+            <td><textarea style="width: 700px; height: 500px;"name="data"></textarea></td>
+        <tr>
+    </table>
+    <input type="submit">
 </form>
 """
 
