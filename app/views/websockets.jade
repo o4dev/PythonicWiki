@@ -36,6 +36,6 @@ block content
 		}
 
 block append scripts
-	script(src="/_ah/channel/jsapi")
+	script(src="/static/js/lib/socket.js")
 	script
 		window.chatClient($("#chat").attr("data-token"), "#{uid}");

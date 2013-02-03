@@ -49,7 +49,7 @@ DEBUG = True if os.environ.get(
     'SERVER_SOFTWARE', '').startswith('Development') else False
 
 
-if DEBUG:
+if False: #DEBUG:
     jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
                                        os.path.join(
                                        os.path.dirname(__file__), '.')),
